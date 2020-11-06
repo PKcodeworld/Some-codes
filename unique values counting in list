@@ -1,0 +1,24 @@
+def uniqueValues(aDict):
+    '''
+    aDict: a dictionary
+    returns: a sorted list of keys that map to unique aDict values, empty list if none
+    '''
+    # Your code here
+    def count(test_lst):
+        counter_sdict = {}
+        for item in test_lst:
+            counter_sdict[item] = counter_sdict.setdefault(item, 0) + 1
+        return counter_sdict
+ 
+    out = count(aDict.values())
+    coll = []
+    for i in out:
+        if out[i]==1:
+            coll.append(i)
+    one = []
+
+    for i in aDict:
+        if aDict[i] in coll:
+            one.append(i)
+    one.sort()
+    return (one)
