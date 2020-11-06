@@ -1,0 +1,26 @@
+def greedy_cow_transport(cows,limit=10):
+    keys = []
+    for i in cows:
+        keys.append(i)
+    trips = []
+    passed = []
+    while len(passed) < len(keys):
+        load = 0
+        taken = []
+        while True:
+            best = 0
+            for i in cows:
+                if cows[i]>best and (cows[i]+load<=limit) and (i not in passed):
+                    best=cows[i]
+                    current = i
+            if best == 0:
+                break
+            if load+cows[current]<=limit:
+                load += cows[current]
+                taken.append(current)
+                passed.append(current)
+            else:
+                break
+
+        trips.append(taken)
+    return trips
