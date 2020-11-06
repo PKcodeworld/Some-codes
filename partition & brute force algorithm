@@ -1,0 +1,44 @@
+def partitions(set_):
+    if not set_:
+        yield []
+        return
+    for i in range(2**len(set_)//2):
+        parts = [set(), set()]
+        for item in set_:
+            parts[i&1].add(item)
+            i >>= 1
+        for b in partitions(parts[1]):
+            yield [parts[0]]+b
+
+# This is a helper function that will fetch all of the available 
+# partitions for you to use for your brute force algorithm.
+def get_partitions(set_):
+    for partition in partitions(set_):
+        yield [list(elt) for elt in partition]
+        
+def brute_force_cow_transport(cows,limit=10):
+    keys = []
+    out = None
+    length=len(cows)
+    for i in cows:
+        keys.append(i)
+
+    outcomes = []
+    for item in (get_partitions(keys)):
+        outcomes.append(item)
+    for item in outcomes:
+        mark = True
+        n = len(item)
+        
+        for i in range(n):
+            sum = 0
+            for term in item[i]:
+                sum+= cows[term]
+            if sum>limit:
+                mark = False
+        if mark ==True and len(item)<=length:
+            length=len(item)
+            out = item
+        else:
+            pass
+    return(out)    
